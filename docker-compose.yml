@@ -1,0 +1,49 @@
+version: '3'
+services:
+
+  nginx:
+    image: gilangvperdana/ssl:nginx
+    volumes:
+      - ./public:/public
+      - ./site.conf:/etc/nginx/sites-available/default
+    networks: 
+      codeigniter_net:
+    ports:
+      - "443:443"
+      - "80:80"
+    restart: always
+
+  php:
+    build: 
+      context: ./public
+      dockerfile: Dockerfile
+    volumes:
+      - ./public:/public
+    depends_on:
+      - database
+    networks:
+      codeigniter_net:
+
+  database:
+    image: mysql:5.7
+    networks:
+      codeigniter_net:
+    ports:
+      - 3306:3306
+    env_file:
+      - .env
+
+  phpmyadmin:
+    depends_on:
+      - database
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8282:80'
+    env_file:
+      - .env
+    networks:
+      codeigniter_net:
+
+networks:
+  codeigniter_net:
