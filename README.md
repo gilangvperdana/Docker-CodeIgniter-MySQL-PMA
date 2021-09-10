@@ -11,6 +11,7 @@
 # Deploy with Docker:
 ```
 Deploy with SSL Connection:
+$ cd Docker-CodeIgniter-MySQL-PMA/
 $ chmod 777 -R /public/
 $ cp -r * ../your_project public/
 $ docker-compose up -d
