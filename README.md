@@ -11,7 +11,6 @@
 # Deploy with Docker:
 ```
 Deploy with SSL Connection:
-$ cd verifycertificate-docker
 $ chmod 777 -R /public/
 $ cp -r * ../your_project public/
 $ docker-compose up -d
