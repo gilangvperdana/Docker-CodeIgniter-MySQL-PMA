@@ -4,7 +4,7 @@
 # Environment:
 ```
 1. Linux
-2. Docker ($ apt install -y nginx)
+2. Docker ($ apt install -y docker.io)
 3. Docker Compose ($ apt install -y docker-compose)
 ```
 
