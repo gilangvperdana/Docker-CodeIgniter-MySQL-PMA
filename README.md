@@ -32,3 +32,13 @@ check on .env file for change, but the default is:
 username : ci
 password : ci
 ```
+
+# Change PHP Version :
+```
+If you want to change PHP version, just change the image on Dockerfile on directory public.
+Example, if you want to change to version 7.2.34 you can change to FROM php:7.2.34-fpm .
+
+After you change, just :
+$ docker-compose build --no-cache php
+$ docker-compose up -d
+```
