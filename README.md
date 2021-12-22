@@ -13,7 +13,7 @@
 Deploy with SSL Connection:
 $ cd Docker-CodeIgniter-MySQL-PMA/
 $ chmod 777 -R public/
-$ cp -r * ../your_project public/
+$ cp -r ../your_project/* public/
 $ docker-compose up -d
 $ docker ps (see container nginx id)
 $ docker exec -it id_nginx_container bash
