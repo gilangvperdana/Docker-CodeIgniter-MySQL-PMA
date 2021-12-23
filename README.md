@@ -42,3 +42,64 @@ After you change, just :
 $ docker-compose build --no-cache php
 $ docker-compose up -d
 ```
+
+# Alternate Way :
+```
+CODEIGNITER HTTPS DEPLOY ON DOCKER.
+
+Alternate way to deploy with :
+Reverse Proxy for Https Deploy [https://github.com/gilangvperdana/Multiple-Https-Nginx-withOneServer]
+Database Instance for MySql Instance [https://github.com/gilangvperdana/Docker-MySQL-PMA]
+You can follow this method :
+
+$ nano docker.compose.yml
+---
+version: '3'
+services:
+
+  apache:
+    image: php:7.2-apache
+    restart: always
+    hostname: apache
+    networks:
+      default:
+      sql_net:
+    volumes:
+      - ./app:/var/www/html #Make a "app" directory for CodeIgniter Project. Please make sure the environment of BASE_URL & Database configuration has been configured first.
+    environment: #Optional
+      - VIRTUAL_HOST=your.domain.com
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=your.domain.com
+      - LETSENCRYPT_EMAIL=your@email.com
+    expose:
+      - 80
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
+  sql_net:
+    external:
+      name: database_sql_net
+---
+$ docker-compose up -d
+
+Install some PHP Dependencies :
+GOES TO INSIDE CONTAINER :
+$ docker exec -it container_id bash
+$ docker-php-ext-install mysqli #if you want to deploy with MySQL for Databases.
+$ a2enmod rewrite
+$ service apache2 restart
+
+Make .htaccess on "app" directory CODEIGNITER Project :
+---
+RewriteEngine On
+  RewriteBase /
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond $1 !^(templates|plugins)
+  RewriteRule ^(.*)$ index.php/$1 [L]
+---
+
+  Access on https://your.domain.com
+```
